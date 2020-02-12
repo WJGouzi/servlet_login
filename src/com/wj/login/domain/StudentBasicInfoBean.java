@@ -7,6 +7,23 @@ package com.wj.login.domain;
  * @Date : 2020/2/12 17:22
  **/
 
+/**
+ * 表的结果如下
+ * CREATE TABLE `t_studentBasicInfo` (
+ *   `id` int(11) NOT NULL AUTO_INCREMENT,
+ *   `name` varchar(255) NOT NULL,
+ *   `id_card` varchar(18) NOT NULL,
+ *   `address` varchar(255) DEFAULT NULL,
+ *   `age` int(11) DEFAULT NULL,
+ *   `height` float DEFAULT NULL,
+ *   `gender` tinyint(1) DEFAULT NULL,
+ *   `login_name` varchar(255) DEFAULT NULL,
+ *   `password` varchar(16) DEFAULT NULL,
+ *   PRIMARY KEY (`id`)
+ * ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+ */
+
+
 public class StudentBasicInfoBean {
 
     private Integer id;
