@@ -31,11 +31,13 @@ public class CheckCodeServlet extends HttpServlet {
         graphics.setColor(Color.CYAN);
         graphics.drawRect(0, 0 , width - 1, height - 1);
 
+
         String str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
         Random random = new Random();
         for (int i = 1; i <= 4; i ++) {
             int index = random.nextInt(str.length());
             char c = str.charAt(index);
+            graphics.setFont(new Font(c + "", 0, 25));
             graphics.drawString(c + "", width / 5 * i , (int) (height * 0.5));
         }
 
