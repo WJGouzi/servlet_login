@@ -6,11 +6,13 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -26,6 +28,31 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("加油");
+
+        // 对于Cookie的处理
+        Cookie[] cookies = request.getCookies();
+        String info = null;
+        String time = null;
+        String currentTime = "" + System.currentTimeMillis();
+
+        if (cookies != null) {
+            for (Cookie cookie: cookies) {
+                if (cookie.getName().equals("lastTime")) {
+                    info = "欢迎您回来";
+                    time = cookie.getValue();
+                    cookie.setValue(currentTime);
+                    cookie.setMaxAge(7 * 24 * 60 * 60);
+                    response.addCookie(cookie);
+                }
+                break;
+            }
+        } else {
+            info = "您好，欢迎您首次访问";
+            // 设置cookie
+            Cookie lastTimeCookie = new Cookie("lastTime", currentTime);
+            lastTimeCookie.setMaxAge(7 * 24 * 60 * 60);
+            response.addCookie(lastTimeCookie);
+        }
 
         // 1.常规操作
         //String username = request.getParameter("username");
@@ -45,6 +72,8 @@ public class LoginServlet extends HttpServlet {
             e.printStackTrace();
         }
 
+        request.setAttribute("info", info);
+        request.setAttribute("time", time);
         StudentBasicInfoBean infoBean = studentBasicInfoDAO.login(studentBasicInfoBean);
         if (infoBean == null) {
             request.getRequestDispatcher("/failServlet").forward(request, response);

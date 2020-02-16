@@ -19,16 +19,17 @@ public class FailServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        //response.setContentType("text/html;charset=utf-8");
-        //response.getWriter().write("登录失败，请核对账号或密码");
+        response.setContentType("text/html;charset=utf-8");
+        response.getWriter().write("登录失败，请核对账号或密码");
+
         // 如下是返会的json数据
-        response.setContentType("text/json;charset=utf-8");
-        response.setCharacterEncoding("utf-8");
-        String str ="{\"message\":\"登录失败，请核对账号或密码\"}";
-        PrintWriter writer = response.getWriter();
-        writer.print(str);
-        writer.flush();
-        writer.close();
+        //response.setContentType("text/json;charset=utf-8");
+        //response.setCharacterEncoding("utf-8");
+        //String str ="{\"message\":\"登录失败，请核对账号或密码\"}";
+        //PrintWriter writer = response.getWriter();
+        //writer.print(str);
+        //writer.flush();
+        //writer.close();
 
 
     }
