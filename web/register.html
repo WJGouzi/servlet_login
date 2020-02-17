@@ -9,7 +9,7 @@
             var img = document.getElementById("checkCode");
             img.onclick = function () { 
                 var date = new Date().getTime();
-                img.src = "/loginModule/checkCodeServlet?" + date;
+                img.src = "/loginModule/checkCodeServlet?time=" + date;
             }
         }
 

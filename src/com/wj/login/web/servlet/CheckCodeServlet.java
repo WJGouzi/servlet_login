@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -33,12 +34,14 @@ public class CheckCodeServlet extends HttpServlet {
 
 
         String str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+        char[] chars = new char[4];
         Random random = new Random();
         for (int i = 1; i <= 4; i ++) {
             int index = random.nextInt(str.length());
             char c = str.charAt(index);
             graphics.setFont(new Font(c + "", 0, 25));
             graphics.drawString(c + "", width / 5 * i , (int) (height * 0.5));
+            chars[i - 1] = c;
         }
 
         for (int i = 0; i < 10; i++) {
@@ -48,9 +51,12 @@ public class CheckCodeServlet extends HttpServlet {
             int y2 = random.nextInt(height);
             graphics.drawLine(x1, y1, x2, y2);
         }
-
+        // 设置最新的session
+        HttpSession session = request.getSession();
+        String number = String.valueOf(chars);
+        session.setAttribute("checkCodeNumber", number);
+        System.out.println(number + ": char[] is :"+ chars);
         ImageIO.write(bufferedImage, "jpg", response.getOutputStream());
-
     }
 
     @Override
